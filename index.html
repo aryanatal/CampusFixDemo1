@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CampusFix – Find it. Fix it. Done.</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F2646;--blue:#1E88E5;--green:#27AE60;--bg:#F5F8FD;--card:#fff;--text:#0F2646;--muted:#4A5568;--line:#DCE4EF;--tint:#E8F1FB;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A1424;--card:#13233C;--text:#EAF1FB;--muted:#9FB0C8;--line:#243752;--tint:#182C48}}
+:root[data-theme="dark"]{--bg:#0A1424;--card:#13233C;--text:#EAF1FB;--muted:#9FB0C8;--line:#243752;--tint:#182C48}
+*,*:before,*:after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Montserrat',system-ui,sans-serif;line-height:1.55}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+[hidden]{display:none!important}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+nav .wrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.logo{font-weight:800;font-size:20px;background:none;border:0;cursor:pointer;margin-right:auto}
+.logo b{color:var(--blue)}
+.tab{background:none;border:0;border-radius:8px;padding:8px 12px;font-weight:600;font-size:14px;cursor:pointer;color:var(--muted)}
+.tab[aria-current="true"]{background:var(--tint);color:var(--text)}
+select,input,textarea{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 12px;max-width:100%}
+.btn{display:inline-block;border:0;border-radius:8px;padding:10px 18px;font-weight:700;cursor:pointer;background:var(--blue);color:#fff}
+.btn.alt{background:var(--tint);color:var(--text)}.btn.green{background:var(--green)}.btn.sm{padding:7px 12px;font-size:13px}
+.btn:hover{filter:brightness(1.08)}.btn:disabled{opacity:.5;cursor:default}
+.hero{padding:40px 0 16px}
+.hero h1{font-size:clamp(36px,8vw,68px);line-height:1.02;margin:0 0 12px;font-weight:800;letter-spacing:-.02em}
+.hero h1 span{display:block}.s2{color:var(--blue)}.s3{color:var(--green)}
+section{padding:28px 0}
+h2{font-size:clamp(24px,4vw,32px);margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 18px;max-width:62ch}
+.ai{background:var(--navy);color:#fff;border-radius:12px;padding:20px}
+.ai h2{margin:0 0 4px}.ai p{color:#B8C8E0;margin:0 0 12px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.ai input{flex:1;min-width:200px;background:#13233C;border-color:#2B4468;color:#fff}
+.pick{background:#13233C;border-left:4px solid var(--green);border-radius:8px;padding:10px 14px;margin-top:10px}
+.pick small{color:#B8C8E0;display:block}
+.ex{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.ex button{background:none;border:1px solid #2B4468;color:#B8C8E0;border-radius:99px;padding:4px 12px;font-size:13px;cursor:pointer}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}.tools input{flex:1;min-width:160px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 14px;font-size:14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:4px}
+.card.featured{border:2px solid var(--blue)}.card h3{margin:0;font-size:17px}
+.cat{font-size:13px;color:var(--muted)}.badge{font-size:12px;font-weight:700;color:var(--green)}.tag{font-size:11px;font-weight:700;color:var(--blue)}
+.live{font-size:12px;font-weight:700;color:#D93025}
+.stars{color:#E0A400;font-weight:700}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto;padding-top:10px}
+.empty{grid-column:1/-1;color:var(--muted)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px}
+.panel h3{margin:0 0 10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.two{grid-template-columns:1fr}}
+form{display:grid;gap:12px}
+label{font-size:14px;font-weight:500;display:grid;gap:4px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.f2{grid-template-columns:1fr}}
+.status{display:inline-block;background:#FFF3D6;color:#7A5300;font-weight:700;font-size:13px;border-radius:99px;padding:4px 12px}
+.status.ok{background:#DDF5E6;color:#17713A}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.steps li{display:flex;gap:10px;align-items:center;color:var(--muted)}
+.steps li:before{content:"";width:14px;height:14px;border-radius:50%;border:2px solid var(--line);flex:none}
+.steps li.done{color:var(--text)}.steps li.done:before{background:var(--green);border-color:var(--green)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}.stat b{font-size:24px;display:block}
+.li{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--line);padding:9px 0}
+.li:first-of-type{border-top:0}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.plan{border:1px solid var(--line);border-radius:10px;padding:16px;background:var(--card)}
+.plan.cur{border:2px solid var(--green)}.plan h4{margin:0}.plan .p{font-size:24px;font-weight:800;margin:4px 0}
+.plan ul{padding-left:18px;margin:8px 0 12px;color:var(--muted);font-size:14px}
+dialog{border:0;border-radius:12px;padding:22px;max-width:440px;width:calc(100% - 28px);background:var(--card);color:var(--text)}
+dialog::backdrop{background:rgba(5,12,25,.6)}dialog h3{margin:0 0 8px}
+.dact{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+.methods{display:flex;gap:6px;margin:10px 0}
+.methods button{flex:1;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px 4px;font-size:13px;font-weight:600;cursor:pointer}
+.methods button[aria-pressed="true"]{background:var(--blue);color:#fff;border-color:var(--blue)}
+.pbox{background:var(--tint);border-radius:8px;padding:12px;font-size:14px;text-align:center}
+.pbox svg{width:150px;height:150px;background:#fff;padding:6px;border-radius:6px}
+.bank{text-align:left;display:grid;grid-template-columns:auto 1fr;gap:4px 12px}
+.bill table{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0}
+.bill td{padding:5px 0;border-bottom:1px solid var(--line)}.bill td:last-child{text-align:right}
+.bill .tot td{font-weight:800;border-bottom:0}
+@media print{body *{visibility:hidden}#billBox,#billBox *{visibility:visible}#billBox{position:absolute;left:0;top:0;width:100%;color:#000}}
+footer{background:var(--navy);color:#fff;text-align:center;padding:32px 20px;margin-top:24px}footer p{color:#B8C8E0;margin:6px 0 0}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;max-width:90%}
+#toast.show{opacity:1}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <button class="logo" data-go="vHome">Campus<b>Fix</b></button>
+  <button class="tab" data-go="vHome">Services</button>
+  <button class="tab" data-go="vSell">Buy &amp; Sell</button>
+  <button class="tab" data-go="vProf">My profile</button>
+  <button class="tab" data-go="vJoin">Provider</button>
+  <select id="college" aria-label="College"></select>
+  <select id="area" aria-label="Area"></select>
+</div></nav>
+
+<!-- SERVICES -->
+<main id="vHome">
+  <header class="hero"><div class="wrap"><h1><span>Find it.</span><span class="s2">Fix it.</span><span class="s3">Done.</span></h1></div></header>
+  <div class="wrap"><div class="ai">
+    <h2>Ask CampusFix AI</h2><p>Describe what you need. It picks the best providers in your college and area.</p>
+    <div class="row"><input id="aiQ" placeholder="e.g. my laptop won't turn on" aria-label="Describe your need"><button class="btn" id="aiGo">Find a match</button></div>
+    <div class="ex" id="aiEx"></div><div id="aiOut" aria-live="polite"></div>
+  </div></div>
+  <section><div class="wrap">
+    <h2>Services near you</h2><p class="sub" id="where"></p>
+    <div class="tools"><input id="q" type="search" placeholder="Search printing, tutor, laptop…" aria-label="Search"><select id="sort" aria-label="Sort"><option value="rating">Top rated</option><option value="price">Lowest price</option></select></div>
+    <div class="chips" id="chips"></div><div class="grid" id="list"></div>
+  </div></section>
+</main>
+
+<!-- BUY & SELL -->
+<main id="vSell" hidden><div class="wrap"><section>
+  <div class="head"><div><h2>Buy &amp; Sell</h2><p class="sub" id="sellWhere" style="margin:0"></p></div><button class="btn green" id="openSell">Sell an item</button></div>
+  <div class="chips" id="iChips"></div>
+  <div class="grid" id="items"></div>
+</section></div></main>
+
+<!-- STUDENT PROFILE -->
+<main id="vProf" hidden><div class="wrap"><section id="profBody"></section></div></main>
+
+<!-- PROVIDER: REGISTER -->
+<main id="vJoin" hidden><div class="wrap"><section>
+  <div class="head"><div><h2>Become a provider</h2><p class="sub" style="margin:0">After you submit, your provider dashboard opens.</p></div><button class="btn alt" id="haveDash" hidden>Open my dashboard</button></div>
+  <div class="panel" style="max-width:560px"><form id="joinForm">
+    <div class="f2"><label>Your name<input name="owner" required maxlength="40"></label><label>Phone<input name="phone" type="tel" required pattern="[0-9]{10}" placeholder="10 digits"></label></div>
+    <label>Service name<input name="name" required maxlength="40"></label>
+    <div class="f2"><label>College<select name="college" id="jCollege"></select></label><label>Area<select name="area" id="jArea"></select></label></div>
+    <div class="f2"><label>Category<select name="cat" id="jCat"></select></label><label>Price (₹)<input name="price" type="number" min="1" required></label></div>
+    <label>What do you offer?<textarea name="desc" rows="2" maxlength="200"></textarea></label>
+    <button class="btn green" type="submit">Register and open dashboard</button>
+  </form></div>
+</section></div></main>
+
+<!-- PROVIDER: DASHBOARD -->
+<main id="vDash" hidden><div class="wrap"><section>
+  <div class="head"><div><h2 id="dName"></h2><p class="sub" id="dWhere" style="margin:0"></p></div><span class="status" id="dStatus"></span></div>
+  <div class="stats"><div class="stat"><b id="sViews">0</b><span class="cat">Profile views</span></div><div class="stat"><b id="sReq">0</b><span class="cat">Requests</span></div><div class="stat"><b id="sPlan">Free</b><span class="cat">Plan</span></div></div>
+  <div class="two">
+    <div class="panel"><h3>Verification</h3><ul class="steps" id="steps"></ul><p style="margin:14px 0 0"><button class="btn alt" id="verify">Simulate verification</button></p></div>
+    <div class="panel"><h3>Live location</h3><p class="cat" style="margin:0 0 10px">Students see "Live" on your listing and can open your position on a map.</p>
+      <div id="locInfo" class="cat" style="margin-bottom:10px">Sharing is off.</div><button class="btn" id="locBtn">Share live location</button></div>
+  </div>
+  <div class="panel" style="margin-top:16px"><h3>Subscription</h3><div class="plans" id="plans"></div></div>
+  <div class="two" style="margin-top:16px">
+    <div class="panel"><h3>Your listing</h3><div id="dCard"></div></div>
+    <div class="panel"><h3>Incoming requests</h3><div id="reqs"></div></div>
+  </div>
+  <p style="margin-top:18px"><button class="btn" data-go="vHome">View in marketplace</button></p>
+</section></div></main>
+
+<footer><b style="font-size:20px">Find it. Fix it. Done.</b><p>Demo prototype. No real payments are processed.</p></footer>
+
+<!-- SELL DIALOG -->
+<dialog id="sellDlg"><h3>Sell an item</h3><p class="cat" style="margin:0 0 10px">Visible only to students of your college.</p>
+  <form id="sellForm">
+    <label>Item<input name="title" required maxlength="40" placeholder="e.g. Engineering Maths textbook"></label>
+    <div class="f2"><label>Price (₹)<input name="price" type="number" min="1" required></label><label>Condition<select name="cond"><option>Like new</option><option>Good</option><option>Fair</option></select></label></div>
+    <label>Type<select name="cat" id="iCat"></select></label>
+    <label>Details<textarea name="desc" rows="2" maxlength="160"></textarea></label>
+    <div class="dact"><button type="button" class="btn alt" data-close="sellDlg">Cancel</button><button class="btn green" type="submit">List item</button></div>
+  </form></dialog>
+
+<!-- PAY DIALOG -->
+<dialog id="payDlg"><h3 id="pTitle"></h3><div id="pItems" class="cat"></div>
+  <div class="methods" id="methods"></div><div class="pbox" id="pBox"></div>
+  <label style="margin-top:12px">Transaction / UTR ID<input id="txn" placeholder="After paying, enter the reference ID" maxlength="24"></label>
+  <div class="dact"><button class="btn alt" data-close="payDlg">Cancel</button><button class="btn green" id="payGo">Confirm payment</button></div></dialog>
+
+<!-- BILL DIALOG -->
+<dialog id="billDlg"><div class="bill" id="billBox"></div>
+  <div class="dact"><button class="btn alt" data-close="billDlg">Close</button><button class="btn" id="printBill">Print bill</button></div></dialog>
+
+<!-- TRACK DIALOG -->
+<dialog id="trkDlg"><h3 id="tName"></h3><div id="tBody" class="cat"></div><div class="dact"><button class="btn alt" data-close="trkDlg">Close</button><a class="btn" id="tMap" target="_blank" rel="noopener">Open in map</a></div></dialog>
+
+<div id="toast" role="status"></div>
+
+<script>
+// ===== DATA (edit these to customise) =====
+var COLLEGES=["Demo Engineering College","Demo Arts & Science College","Demo Polytechnic"];
+var AREAS=["All areas","Main gate","Hostel block","Library lane","Canteen side"];
+var CATS=["Printing","Repairs","Tutoring","Design","Books","Photography"];
+var ICATS=["Books","Electronics","Furniture","Clothing","Stationery","Other"];
+var DOCS=["College ID card","Fee receipt","Bonafide certificate","Admit card"];
+var KEY={Printing:["print","xerox","notes","assignment","report","binding"],Repairs:["laptop","phone","screen","charger","broken","repair","fix","battery","turn on"],Tutoring:["tutor","exam","learn","python","math","coding","doubt","study","viva"],Design:["logo","design","poster","ppt","presentation","banner"],Books:["book","textbook","second hand"],Photography:["photo","camera","event","shoot","fest","portrait"]};
+var PLANS=[{id:"Free",price:0,perks:["Basic listing","Appears in search"]},{id:"Basic",price:99,perks:["Verified badge priority","Higher in AI matches"]},{id:"Pro",price:249,perks:["Featured placement","Priority support"]}];
+var PAY={upi:"campusfix@demo",bank:{n:"CampusFix (Demo)",a:"000012345678",i:"DEMO0000001",b:"Demo Bank"}};
+var BASE={lat:28.6139,lng:77.2090}; // demo coordinates only
+var services=[
+ {id:1,name:"Notes & Print Hub",cat:"Printing",price:2,unit:"per page",rating:4.7,verified:true,featured:true,college:0,area:"Main gate",desc:"Fast printing and binding",loc:{lat:BASE.lat+.001,lng:BASE.lng+.001}},
+ {id:2,name:"LapFix by Rohan",cat:"Repairs",price:300,unit:"per fix",rating:4.5,verified:true,college:0,area:"Hostel block",desc:"Laptop and phone repairs",loc:{lat:BASE.lat-.001,lng:BASE.lng+.002}},
+ {id:3,name:"Python Tutor – Simran",cat:"Tutoring",price:250,unit:"per hour",rating:4.9,verified:true,college:0,area:"Library lane",desc:"Python and data science doubts"},
+ {id:4,name:"Poster & Logo Studio",cat:"Design",price:400,unit:"per design",rating:4.4,verified:false,college:1,area:"Canteen side",desc:"Posters, logos and PPTs"},
+ {id:5,name:"Senior Book Exchange",cat:"Books",price:150,unit:"per book",rating:4.3,verified:true,college:1,area:"Library lane",desc:"Second-hand textbooks"},
+ {id:6,name:"Event Clicks",cat:"Photography",price:800,unit:"per event",rating:4.6,verified:true,college:2,area:"Main gate",desc:"Fests and portraits"},
+ {id:7,name:"Math Doubt Clinic",cat:"Tutoring",price:180,unit:"per hour",rating:4.2,verified:false,college:2,area:"Hostel block",desc:"Maths and exam prep"}];
+var items=[
+ {id:1,title:"Engineering Maths textbook",cat:"Books",price:200,cond:"Good",desc:"Semester 2, little highlighting",college:0,seller:"Ananya"},
+ {id:2,title:"Scientific calculator",cat:"Electronics",price:350,cond:"Like new",desc:"Used one semester",college:0,seller:"Karan"},
+ {id:3,title:"Study table lamp",cat:"Electronics",price:150,cond:"Good",desc:"Works perfectly",college:1,seller:"Meera"},
+ {id:4,title:"Drafter and drawing kit",cat:"Stationery",price:250,cond:"Fair",desc:"Complete set",college:2,seller:"Ravi"}];
+var student=null, mine=null, bills=[], activeCat="All", iCat="All", watchId=null, uid=100;
+
+// ===== HELPERS =====
+function $(id){return document.getElementById(id);}
+function esc(s){var d=document.createElement("div");d.textContent=s==null?"":s;return d.innerHTML;}
+function toast(m){var t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("show");},2800);}
+function opts(a){return a.map(function(x,i){return '<option value="'+i+'">'+esc(x)+'</option>';}).join("");}
+function plain(a){return a.map(function(x){return "<option>"+esc(x)+"</option>";}).join("");}
+var VIEWS=["vHome","vSell","vProf","vJoin","vDash"];
+function go(v){VIEWS.forEach(function(x){$(x).hidden=(x!==v);});
+  document.querySelectorAll(".tab").forEach(function(t){var on=t.getAttribute("data-go")===v||(v==="vDash"&&t.getAttribute("data-go")==="vJoin");t.setAttribute("aria-current",on);});
+  if(v==="vHome")renderList();if(v==="vSell")renderItems();if(v==="vProf")renderProfile();if(v==="vJoin")$("haveDash").hidden=!mine;
+  window.scrollTo(0,0);}
+document.addEventListener("click",function(e){
+  var g=e.target.closest("[data-go]");if(g)go(g.getAttribute("data-go"));
+  var c=e.target.closest("[data-close]");if(c)$(c.getAttribute("data-close")).close();});
+function college(){return +$("college").value;}
+function areaName(){var i=+$("area").value;return i?AREAS[i]:"";}
+function inScope(s){return s.college===college()&&(!areaName()||s.area===areaName());}
+function needStudent(action){
+  if(!student){toast("Create your student profile to "+action+".");go("vProf");return false;}
+  if(!student.verified){toast("Get your student profile verified to "+action+".");go("vProf");return false;}
+  return true;}
+
+// ===== SERVICES =====
+function chips(){$("chips").innerHTML=["All"].concat(CATS).map(function(c){return '<button class="chip" aria-pressed="'+(c===activeCat)+'" data-c="'+c+'">'+c+'</button>';}).join("");}
+function cardHTML(s,btn){
+  return '<article class="card'+(s.featured?' featured':'')+'">'+(s.featured?'<span class="tag">Featured</span>':'')+
+  '<h3>'+esc(s.name)+'</h3><span class="cat">'+s.cat+' · '+esc(s.area)+'</span>'+(s.desc?'<span class="cat">'+esc(s.desc)+'</span>':'')+
+  (s.rating?'<span class="stars">★ '+s.rating.toFixed(1)+'</span>':'')+
+  (s.verified?'<span class="badge">✓ Verified'+(s.plan&&s.plan!=="Free"?' · '+s.plan:'')+'</span>':'<span class="cat">Verification pending</span>')+
+  (s.loc?'<span class="live">● Live location</span>':'')+
+  '<div class="meta"><b>₹'+s.price+' <small style="font-weight:400;color:var(--muted)">'+esc(s.unit)+'</small></b><span class="row" style="gap:6px">'+
+  (btn&&s.loc?'<button class="btn alt sm" data-track="'+s.id+'">Track</button>':'')+(btn?'<button class="btn sm" data-id="'+s.id+'">Request</button>':'')+'</span></div></article>';}
+function renderList(){
+  $("where").textContent=COLLEGES[college()]+(areaName()?" · "+areaName():" · all areas");
+  var q=$("q").value.trim().toLowerCase();
+  var l=services.filter(function(s){return inScope(s)&&(activeCat==="All"||s.cat===activeCat)&&(s.name+" "+s.cat+" "+(s.desc||"")).toLowerCase().indexOf(q)>-1;});
+  l.sort(function(a,b){if(!!a.featured!==!!b.featured)return a.featured?-1:1;return $("sort").value==="price"?a.price-b.price:b.rating-a.rating;});
+  $("list").innerHTML=l.length?l.map(function(s){return cardHTML(s,true);}).join(""):'<p class="empty">No providers here yet. Try another area.</p>';}
+$("chips").addEventListener("click",function(e){var c=e.target.getAttribute("data-c");if(c){activeCat=c;chips();renderList();}});
+["q","sort"].forEach(function(id){$(id).addEventListener(id==="q"?"input":"change",renderList);});
+["college","area"].forEach(function(id){$(id).addEventListener("change",function(){$("aiOut").innerHTML="";renderList();renderItems();});});
+function sById(id){return services.filter(function(x){return x.id==id;})[0];}
+$("list").addEventListener("click",function(e){
+  var t=e.target.getAttribute("data-track"),r=e.target.getAttribute("data-id");
+  if(t){var s=sById(t);$("tName").textContent=s.name+" is live";
+    $("tBody").innerHTML="Position: "+s.loc.lat.toFixed(5)+", "+s.loc.lng.toFixed(5)+"<br>Updated: "+new Date().toLocaleTimeString()+"<br>Area: "+esc(s.area);
+    $("tMap").href="https://www.openstreetmap.org/?mlat="+s.loc.lat+"&mlon="+s.loc.lng+"#map=18/"+s.loc.lat+"/"+s.loc.lng;$("trkDlg").showModal();}
+  if(r){if(!needStudent("send a request"))return;var s2=sById(r);toast("Request sent to "+s2.name+".");if(mine&&s2.id===mine.id)mine.req++;}});
+
+// AI matcher (rule-based demo)
+$("aiEx").innerHTML=["my laptop won't turn on","need 40 pages printed","python exam help"].map(function(x){return '<button data-x="'+esc(x)+'">'+esc(x)+'</button>';}).join("");
+$("aiEx").addEventListener("click",function(e){var x=e.target.getAttribute("data-x");if(x){$("aiQ").value=x;runAI();}});
+$("aiGo").addEventListener("click",runAI);$("aiQ").addEventListener("keydown",function(e){if(e.key==="Enter")runAI();});
+function runAI(){
+  var t=$("aiQ").value.toLowerCase().trim();if(!t){toast("Describe what you need first.");return;}
+  var r=services.filter(inScope).map(function(s){var sc=0,h=[];(KEY[s.cat]||[]).forEach(function(k){if(t.indexOf(k)>-1){sc+=2;h.push(k);}});
+    if(sc>0)sc+=(s.rating||0)/5+(s.verified?1:0)+(s.featured?.5:0)+(s.plan==="Basic"?.3:0);return{s:s,sc:sc,h:h};}).filter(function(x){return x.sc>0;}).sort(function(a,b){return b.sc-a.sc;}).slice(0,3);
+  $("aiOut").innerHTML=r.length?r.map(function(x,i){return '<div class="pick"><b>'+(i?'':'Best match: ')+esc(x.s.name)+'</b> · ₹'+x.s.price+' '+esc(x.s.unit)+'<small>Matched on "'+esc(x.h[0])+'". '+esc(x.s.area)+(x.s.verified?', verified':'')+'</small></div>';}).join(""):'<div class="pick"><b>No match here yet.</b><small>Try all areas or another college.</small></div>';}
+
+// ===== BUY & SELL =====
+function renderItems(){
+  $("sellWhere").textContent="Used items from students of "+COLLEGES[college()];
+  $("iChips").innerHTML=["All"].concat(ICATS).map(function(c){return '<button class="chip" aria-pressed="'+(c===iCat)+'" data-ic="'+c+'">'+c+'</button>';}).join("");
+  var l=items.filter(function(i){return i.college===college()&&!i.sold&&(iCat==="All"||i.cat===iCat);});
+  $("items").innerHTML=l.length?l.map(function(i){return '<article class="card"><h3>'+esc(i.title)+'</h3><span class="cat">'+i.cat+' · '+i.cond+'</span><span class="cat">'+esc(i.desc)+'</span><span class="cat">Seller: '+esc(i.seller)+'</span><div class="meta"><b>₹'+i.price+'</b><button class="btn sm" data-buy="'+i.id+'">Buy</button></div></article>';}).join(""):'<p class="empty">Nothing listed yet. Sell something you no longer use.</p>';}
+$("iChips").addEventListener("click",function(e){var c=e.target.getAttribute("data-ic");if(c){iCat=c;renderItems();}});
+$("iCat").innerHTML=plain(ICATS);
+$("openSell").addEventListener("click",function(){if(needStudent("sell an item"))$("sellDlg").showModal();});
+$("sellForm").addEventListener("submit",function(e){e.preventDefault();var f=e.target;
+  items.push({id:++uid,title:f.title.value.trim(),cat:f.cat.value,price:+f.price.value,cond:f.cond.value,desc:f.desc.value.trim(),college:student.college,seller:student.name});
+  f.reset();$("sellDlg").close();$("college").value=student.college;iCat="All";renderItems();toast("Item listed for your college.");});
+$("items").addEventListener("click",function(e){var id=e.target.getAttribute("data-buy");if(!id)return;
+  if(!needStudent("buy an item"))return;
+  var it=items.filter(function(x){return x.id==id;})[0];
+  if(it.college!==student.college){toast("You can only buy from students of your own college.");return;}
+  checkout("Buy: "+it.title,[{label:it.title+" (seller "+it.seller+")",amt:it.price}],0.05,function(){it.sold=true;renderItems();});});
+
+// ===== STUDENT PROFILE =====
+function renderProfile(){
+  var b=$("profBody");
+  if(!student){b.innerHTML='<h2>Student profile</h2><p class="sub">Verified students can request services, buy and sell used items in their college.</p><div class="panel" style="max-width:520px"><form id="stForm"><div class="f2"><label>Full name<input name="name" required maxlength="40"></label><label>Phone<input name="phone" type="tel" required pattern="[0-9]{10}"></label></div><div class="f2"><label>College<select name="college">'+opts(COLLEGES)+'</select></label><label>Enrollment no.<input name="enroll" required maxlength="20"></label></div><button class="btn green" type="submit">Create profile</button></form></div>';
+    $("stForm").addEventListener("submit",function(e){e.preventDefault();var f=e.target;student={name:f.name.value.trim(),phone:f.phone.value,college:+f.college.value,enroll:f.enroll.value.trim(),docs:[],state:"draft",verified:false};$("college").value=student.college;renderProfile();});return;}
+  var s=student,label=s.verified?"Verified student":s.state==="review"?"Under review":"Not verified";
+  b.innerHTML='<div class="head"><div><h2>'+esc(s.name)+'</h2><p class="sub" style="margin:0">'+esc(COLLEGES[s.college])+' · Enrollment '+esc(s.enroll)+' · '+esc(s.phone)+'</p></div><span class="status'+(s.verified?' ok':'')+'">'+label+'</span></div>'+
+  '<div class="two"><div class="panel"><h3>Verification documents</h3>'+
+  (s.docs.length?s.docs.map(function(d){return '<div class="li"><span>'+esc(d.type)+'<br><span class="cat">'+esc(d.file)+'</span></span><span class="badge">Added</span></div>';}).join(""):'<p class="cat" style="margin:0 0 10px">No documents yet. Add your college ID or a fee receipt.</p>')+
+  (s.verified?'':'<div class="row" style="margin-top:12px"><select id="dType">'+plain(DOCS)+'</select><input type="file" id="dFile" accept="image/*,.pdf" aria-label="Choose file"><button class="btn alt sm" id="dAdd">Add document</button></div>'+
+  (s.state==="draft"?'<p style="margin:14px 0 0"><button class="btn" id="dSubmit">Submit for verification</button></p>':'<p style="margin:14px 0 0"><button class="btn green" id="dApprove">Simulate approval</button></p><p class="cat">In the real product, a college admin reviews these.</p>'))+
+  '</div><div class="panel"><h3>My bills</h3>'+(bills.length?bills.map(function(x,i){return '<div class="li"><span>'+esc(x.no)+'<br><span class="cat">'+esc(x.title)+' · ₹'+x.total.toFixed(2)+'</span></span><button class="btn alt sm" data-bill="'+i+'">View</button></div>';}).join(""):'<p class="cat" style="margin:0">Bills for your purchases and subscriptions appear here.</p>')+'</div></div>';
+  var add=$("dAdd");if(add)add.addEventListener("click",function(){var f=$("dFile").files[0];if(!f){toast("Choose a file first.");return;}s.docs.push({type:$("dType").value,file:f.name});renderProfile();});
+  var sb=$("dSubmit");if(sb)sb.addEventListener("click",function(){if(!s.docs.length){toast("Add at least one document.");return;}s.state="review";renderProfile();toast("Submitted for review.");});
+  var ap=$("dApprove");if(ap)ap.addEventListener("click",function(){s.verified=true;s.state="done";renderProfile();toast("You're a verified student.");});}
+$("profBody").addEventListener("click",function(e){var i=e.target.getAttribute("data-bill");if(i!==null)showBill(bills[+i]);});
+
+// ===== PAYMENTS + BILL =====
+var pay=null;
+function qrSVG(seed){var n=21,h=0,i,r,c,out="";for(i=0;i<seed.length;i++)h=(h*31+seed.charCodeAt(i))>>>0;
+  function fin(x,y){return(x<7&&y<7)||(x>n-8&&y<7)||(x<7&&y>n-8);}
+  for(r=0;r<n;r++)for(c=0;c<n;c++){var on;if(fin(c,r)){var a=c<7?c:c-(n-7),b=r<7?r:r-(n-7);on=(a===0||a===6||b===0||b===6||(a>1&&a<5&&b>1&&b<5));}else{h=(h*1103515245+12345)>>>0;on=(h>>>16)%2===0;}
+    if(on)out+='<rect x="'+c+'" y="'+r+'" width="1" height="1"/>';}
+  return '<svg viewBox="0 0 '+n+' '+n+'" fill="#0F2646" role="img" aria-label="Demo QR code">'+out+'</svg>';}
+function checkout(title,lines,feeRate,done){
+  var sub=lines.reduce(function(a,l){return a+l.amt;},0),fee=Math.round(sub*feeRate*100)/100;
+  pay={title:title,lines:lines,fee:fee,total:sub+fee,done:done,m:"qr"};
+  $("pTitle").textContent=title;
+  $("pItems").innerHTML=lines.map(function(l){return esc(l.label)+" – ₹"+l.amt;}).join("<br>")+(fee?"<br>Platform fee – ₹"+fee.toFixed(2):"")+'<br><b style="color:var(--text)">Total ₹'+pay.total.toFixed(2)+'</b>';
+  $("txn").value="";payMethod("qr");$("payDlg").showModal();}
+function payMethod(m){pay.m=m;
+  $("methods").innerHTML=[["qr","Scan QR"],["upi","UPI ID"],["bank","Bank transfer"]].map(function(x){return '<button type="button" aria-pressed="'+(x[0]===m)+'" data-m="'+x[0]+'">'+x[1]+'</button>';}).join("");
+  var box=m==="qr"?qrSVG(pay.title+pay.total)+'<div>Scan to pay ₹'+pay.total.toFixed(2)+' (demo QR)</div>':
+   m==="upi"?'Pay to UPI ID<br><b>'+PAY.upi+'</b><br>Amount: ₹'+pay.total.toFixed(2):
+   '<div class="bank"><span>Name</span><b>'+PAY.bank.n+'</b><span>Account</span><b>'+PAY.bank.a+'</b><span>IFSC</span><b>'+PAY.bank.i+'</b><span>Bank</span><b>'+PAY.bank.b+'</b><span>Amount</span><b>₹'+pay.total.toFixed(2)+'</b></div>';
+  $("pBox").innerHTML=box;}
+$("methods").addEventListener("click",function(e){var m=e.target.getAttribute("data-m");if(m)payMethod(m);});
+$("payGo").addEventListener("click",function(){
+  var t=$("txn").value.trim();if(t.length<6){toast("Enter the transaction ID (at least 6 characters).");return;}
+  var buyer=student?student.name:mine?mine.owner:"Guest";
+  var bill={no:"CF-"+Date.now().toString().slice(-8),date:new Date().toLocaleString(),buyer:buyer,title:pay.title,lines:pay.lines,fee:pay.fee,total:pay.total,method:{qr:"QR code",upi:"UPI ID",bank:"Bank transfer"}[pay.m],txn:t};
+  bills.unshift(bill);$("payDlg").close();if(pay.done)pay.done();showBill(bill);});
+function showBill(b){
+  $("billBox").innerHTML='<h3>Bill of purchase</h3><div class="cat">Invoice '+esc(b.no)+' · '+esc(b.date)+'</div><div class="cat">Billed to: '+esc(b.buyer)+'</div><table>'+
+   b.lines.map(function(l){return '<tr><td>'+esc(l.label)+'</td><td>₹'+l.amt.toFixed(2)+'</td></tr>';}).join("")+
+   (b.fee?'<tr><td>Platform fee</td><td>₹'+b.fee.toFixed(2)+'</td></tr>':'')+'<tr class="tot"><td>Total paid</td><td>₹'+b.total.toFixed(2)+'</td></tr></table>'+
+   '<div class="cat">Paid via '+esc(b.method)+' · Ref '+esc(b.txn)+'</div><div class="badge" style="margin-top:8px">✓ PAID · CampusFix (demo)</div>';
+  $("billDlg").showModal();}
+$("printBill").addEventListener("click",function(){window.print();});
+
+// ===== PROVIDER =====
+$("jCollege").innerHTML=opts(COLLEGES);$("jArea").innerHTML=opts(AREAS.slice(1));$("jCat").innerHTML=plain(CATS);
+$("college").innerHTML=opts(COLLEGES);$("area").innerHTML=opts(AREAS);
+$("haveDash").addEventListener("click",openDash);
+$("joinForm").addEventListener("submit",function(e){e.preventDefault();var f=e.target;
+  mine={id:++uid+1000,name:f.name.value.trim(),owner:f.owner.value.trim(),cat:f.cat.value,price:+f.price.value,unit:"per service",rating:0,verified:false,featured:false,plan:"Free",college:+f.college.value,area:AREAS[+f.area.value+1],desc:f.desc.value.trim(),views:Math.floor(Math.random()*8)+3,req:0,steps:1};
+  services.push(mine);$("college").value=mine.college;f.reset();openDash();toast("Registered. Welcome, "+mine.owner+".");});
+function openDash(){$("dName").textContent=mine.name;$("dWhere").textContent="Owner: "+mine.owner+" · "+COLLEGES[mine.college]+" · "+mine.area;paintDash();go("vDash");}
+function paintDash(){
+  $("sViews").textContent=mine.views;$("sReq").textContent=mine.req;$("sPlan").textContent=mine.plan;
+  $("steps").innerHTML=["Details submitted","Phone confirmed","College ID checked","Listing verified and live"].map(function(t,i){return '<li class="'+(mine.steps>i?'done':'')+'">'+t+'</li>';}).join("");
+  $("dStatus").textContent=mine.verified?"Verified":"Verification pending";$("dStatus").className="status"+(mine.verified?" ok":"");
+  $("verify").hidden=mine.verified;$("dCard").innerHTML=cardHTML(mine,false);
+  $("plans").innerHTML=PLANS.map(function(p){var cur=p.id===mine.plan;return '<div class="plan'+(cur?' cur':'')+'"><h4>'+p.id+'</h4><div class="p">'+(p.price?'₹'+p.price+'<small style="font-size:13px;font-weight:400">/month</small>':'Free')+'</div><ul>'+p.perks.map(function(x){return "<li>"+x+"</li>";}).join("")+'</ul>'+(cur?'<span class="badge">Current plan</span>':p.price?'<button class="btn sm" data-plan="'+p.id+'">Subscribe</button>':'')+'</div>';}).join("");
+  $("reqs").innerHTML=mine.req&&mine.verified?'<div class="li"><span><b>Student request</b><br><span class="cat">Needs '+esc(mine.cat.toLowerCase())+' help</span></span><button class="btn green sm" id="accept">Accept</button></div>':'<p class="cat" style="margin:0">'+(mine.verified?"Live. Requests will show up here.":"Verified listings get matched first.")+'</p>';
+  $("locBtn").textContent=mine.loc?"Stop sharing":"Share live location";}
+$("verify").addEventListener("click",function(){if(mine.steps<4)mine.steps++;if(mine.steps===4){mine.verified=true;mine.rating=4.0;mine.req=1;toast("You're verified and live.");}paintDash();});
+$("reqs").addEventListener("click",function(e){if(e.target.id==="accept"){toast("Request accepted. The student is notified.");e.target.disabled=true;}});
+$("plans").addEventListener("click",function(e){var id=e.target.getAttribute("data-plan");if(!id)return;var p=PLANS.filter(function(x){return x.id===id;})[0];
+  checkout("Subscription: "+p.id+" plan",[{label:p.id+" plan, 1 month",amt:p.price}],0,function(){mine.plan=p.id;if(p.id==="Pro")mine.featured=true;paintDash();renderList();});});
+// live location: real GPS if the browser allows it, otherwise a demo position
+$("locBtn").addEventListener("click",function(){
+  if(mine.loc){if(watchId!==null&&navigator.geolocation)navigator.geolocation.clearWatch(watchId);watchId=null;mine.loc=null;$("locInfo").textContent="Sharing is off.";paintDash();return;}
+  function set(lat,lng,src){mine.loc={lat:lat,lng:lng};$("locInfo").textContent="Live ("+src+"): "+lat.toFixed(5)+", "+lng.toFixed(5)+" · "+new Date().toLocaleTimeString();paintDash();}
+  function demo(){set(BASE.lat,BASE.lng,"demo position");toast("Location blocked. Showing a demo position.");}
+  if(!navigator.geolocation){demo();return;}
+  watchId=navigator.geolocation.watchPosition(function(p){set(p.coords.latitude,p.coords.longitude,"GPS");},function(){if(!mine.loc)demo();},{enableHighAccuracy:true});});
+
+chips();renderList();renderItems();go("vHome");
+</script>
+</body>
+</html>
